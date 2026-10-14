@@ -170,37 +170,35 @@ export const register: Register = on => {
     const { Box, Button, Text } = $.ui.resolve(e)
     const now = await read($, status)
 
+    let row
     if (now === 'working') {
-      return (
-        <Box>
-          <Text dimColor>✨ Enhancing your prompt…</Text>
-        </Box>
-      )
-    }
-
-    if (now === 'ready') {
-      return (
+      row = <Text dimColor>✨ Enhancing your prompt…</Text>
+    } else if (now === 'ready') {
+      row = (
         <Box gap={1}>
           <Text color="green">✨ Enhanced. Review or edit it in the box.</Text>
           <Button key="send" label="Send" variant="primary" onPress={() => send($)} />
           <Button key="undo" label="Undo" onPress={() => undo($)} />
         </Box>
       )
-    }
-
-    if (now === 'error') {
-      return (
+    } else if (now === 'error') {
+      row = (
         <Box gap={1}>
           <Text color="red">{(await read($, message)) ?? 'Could not enhance.'}</Text>
           <Button key="retry" label="Retry" onPress={() => run($)} />
           <Button key="dismiss" label="Dismiss" onPress={() => reset($)} />
         </Box>
       )
+    } else {
+      row = <Button key="enhance" label="✨ Enhance prompt" onPress={() => run($)} />
     }
 
+    // Keep what other mods (and the engine) draw in the band, below this row.
+    const below = await next(e)
     return (
-      <Box>
-        <Button key="enhance" label="✨ Enhance prompt" onPress={() => run($)} />
+      <Box flexDirection="column">
+        {row}
+        {below}
       </Box>
     )
   })

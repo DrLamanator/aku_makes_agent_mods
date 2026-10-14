@@ -1,12 +1,19 @@
 {
   "name": "aku-mods",
   "description": "Aku's Claude Code mods",
-  "owner": { "name": "drlamanator" },
+  "owner": {
+    "name": "drlamanator"
+  },
   "plugins": [
     {
       "name": "prompt-enhancer",
       "source": "./mods/prompt-enhancer",
       "description": "Rewrites a vague draft in the prompt box into a specific prompt using the project's instructions, skills and conversation, then sends it on your click."
+    },
+    {
+      "name": "assumption-check",
+      "source": "./mods/assumption-check",
+      "description": "Claude logs its assumptions and intent as it works; review them in a side pane and send corrections back mid-turn."
     }
   ]
 }

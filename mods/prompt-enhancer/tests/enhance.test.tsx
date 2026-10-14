@@ -22,6 +22,14 @@ function fakeEngine(on: On, opts: { draft: string; fork?: string; complete?: str
   const submitted: string[] = []
   const completeSystems: (string | undefined)[] = []
 
+  on('ui.render', { component: 'AbovePrompt' }, ($, e) => {
+    const { Box, Text } = $.ui.resolve(e)
+    return (
+      <Box key="engine-band">
+        <Text>engine band</Text>
+      </Box>
+    )
+  })
   on('prompt.read', () => ({ value: { text: box.text, cursor: box.text.length } }))
   on('prompt.fill', ($, e) => {
     box.text = e.mode === 'replace' ? e.text : box.text + e.text
@@ -63,6 +71,7 @@ for (const surface of ['terminal', 'desktop'] as const) {
 
     expect(engine.box.text).toBe('Fix the login bug in src/auth.')
     expect(await ui.find({ key: 'send' })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: 'engine band' })).toBeDefined()
 
     await ui.press({ key: 'send' })
     expect(engine.submitted).toEqual(['Fix the login bug in src/auth.'])
