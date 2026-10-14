@@ -1,0 +1,7 @@
+{
+  "name": "assumption-check",
+  "version": "0.1.0",
+  "description": "Claude logs its assumptions and intent as it works; review them in a side pane and send corrections back mid-turn.",
+  "author": { "name": "drlamanator" },
+  "types": "./types/index.d.ts"
+}
