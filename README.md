@@ -9,6 +9,7 @@ At the prompt of a Claude Code terminal session:
 ```
 /plugin install prompt-enhancer --marketplace drlamanator/aku_makes_agent_mods
 /plugin install assumption-check --marketplace drlamanator/aku_makes_agent_mods
+/plugin install plain-answers --marketplace drlamanator/aku_makes_agent_mods
 ```
 
 From a shell:
@@ -16,6 +17,7 @@ From a shell:
 ```
 claude plugin install prompt-enhancer --marketplace drlamanator/aku_makes_agent_mods
 claude plugin install assumption-check --marketplace drlamanator/aku_makes_agent_mods
+claude plugin install plain-answers --marketplace drlamanator/aku_makes_agent_mods
 ```
 
 Answer `y` to add the marketplace, then pick a scope (user scope = every session).
@@ -54,6 +56,25 @@ Notes:
 - How often Claude logs depends on the model following the tool description; it is a nudge, not a guarantee.
 - Each logged item is a small tool call (a few dozen tokens).
 - On mobile there is no text field in the pane: mark ✗ there and type the correction in the prompt.
+
+### plain-answers
+
+Makes Claude's replies easy to read when you juggle several sessions.
+
+1. With every prompt you send, it adds a short writing guide that Claude reads and you don't see:
+   - Use plain words, and explain a technical term the first time it comes up. Exact names (files, commands, branches) stay exact.
+   - Write at most one short line between tool calls, and keep findings for the final reply.
+   - Make the final reply stand on its own: start with what was asked and how it ended, and repeat anything said earlier in the turn that still matters.
+   - After a turn that did work, end with **Done**, **Not done** and **Next steps**. Each next step starts "You:" or "Claude:".
+   - A quick question gets a quick answer, with no sections.
+2. Sometimes a work turn (three or more tool calls, or a real paragraph written between them) still ends without those sections. Then the mod asks the session's model for a **📋 Recap** in that format and shows it beneath the answer. The recap is built from what actually happened (tool results, errors), not only from what Claude said. If the recap fails, it lists what Claude said during the turn instead.
+3. `/catchup` gives a recap of the whole session in the same format, for when you switch back to it. (Claude Code's own `/recap` gives one line.)
+
+Notes:
+
+- The guide adds about 300 tokens to each prompt you send.
+- A recap is one extra call on the session's model. Most of the conversation is served from the prompt cache, but you still pay for the output, and the turn ends a few seconds later. It only runs when Claude skipped the sections.
+- It is an instruction, not a filter: Claude usually follows it, and the recap covers the times it doesn't.
 
 ## Develop
 

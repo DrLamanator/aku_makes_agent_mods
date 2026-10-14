@@ -1,0 +1,7 @@
+{
+  "name": "plain-answers",
+  "version": "0.1.0",
+  "description": "Plain-language, self-contained answers that end with Done / Not done / Next steps, plus a recap when a work turn ends without them",
+  "author": { "name": "drlamanator" },
+  "types": "./types/index.d.ts"
+}
