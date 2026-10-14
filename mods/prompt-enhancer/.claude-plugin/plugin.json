@@ -1,0 +1,9 @@
+{
+  "name": "prompt-enhancer",
+  "version": "0.1.0",
+  "description": "Rewrites a vague draft in the prompt box into a specific prompt using the project's instructions, skills and conversation, then sends it on your click.",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "drlamanator"
+  }
+}
