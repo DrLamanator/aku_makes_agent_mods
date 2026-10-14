@@ -14,6 +14,11 @@
       "name": "assumption-check",
       "source": "./mods/assumption-check",
       "description": "Claude logs its assumptions and intent as it works; review them in a side pane and send corrections back mid-turn."
+    },
+    {
+      "name": "plain-answers",
+      "source": "./mods/plain-answers",
+      "description": "Plain-language, self-contained answers that end with Done / Not done / Next steps; a recap when a work turn ends without them, and /catchup for a session you switch back to."
     }
   ]
 }
