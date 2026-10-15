@@ -1,0 +1,21 @@
+{
+  "name": "context-steward",
+  "version": "0.1.0",
+  "description": "Shows the context window's fill under the prompt and reminds the model once when it grows past a threshold",
+  "author": { "name": "drlamanator" },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "thresholdTokens": {
+      "type": "number",
+      "title": "Reminder threshold (tokens)",
+      "description": "Context size at which the meter turns into a warning and the model gets one reminder to suggest /compact or a handoff",
+      "default": 160000
+    },
+    "stepTokens": {
+      "type": "number",
+      "title": "Reminder step (tokens)",
+      "description": "How much more the context must grow after a reminder before the next one",
+      "default": 40000
+    }
+  }
+}
