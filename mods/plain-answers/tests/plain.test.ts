@@ -51,6 +51,12 @@ test('the guide rides beside a prompt, after any context already there', async (
   expect(engine.contexts[1]).toEqual(['from below', GUIDE])
 })
 
+test('a skill or prompt command goes without the guide', async ($, on) => {
+  const engine = fakeEngine(on)
+  await $.prompt.submit({ text: '/simplify', wait: false, origin: { kind: 'composer' }, command: { name: 'simplify', args: '' } })
+  expect(engine.contexts[0]).toBeUndefined()
+})
+
 test('a work turn that ends without the sections gets a recap beneath it', async ($, on) => {
   const engine = fakeEngine(on)
   const done = await turn($, engine.rows, [said(LONG, 1), said('', 2), said('All fixed.')], 'All fixed.')
