@@ -102,10 +102,8 @@ export const register: Register = on => {
     return next(e)
   })
 
-  on('prompt.submit', ($, e, next) => {
-    if (e.command !== undefined) return next(e)
-    return next({ ...e, context: [...(e.context ?? []), GUIDE] })
-  })
+  // A slash command never comes through here: it runs as command.run instead.
+  on('prompt.submit', ($, e, next) => next({ ...e, context: [...(e.context ?? []), GUIDE] }))
 
   on('turn.start', async ($, e, next) => {
     if (e.agentId === undefined) {
