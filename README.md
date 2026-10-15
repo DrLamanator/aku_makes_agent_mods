@@ -1,3 +1,5 @@
+<img width="1024" height="572" alt="image" src="https://github.com/user-attachments/assets/b6f9f3e9-468b-4a1c-a427-5456db2ba697" />
+
 # aku_makes_agent_mods
 
 Claude Code mods (function-hook plugins).
