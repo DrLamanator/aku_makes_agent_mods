@@ -19,6 +19,11 @@
       "name": "plain-answers",
       "source": "./mods/plain-answers",
       "description": "Plain-language, self-contained answers that end with Done / Not done / Next steps; a recap when a work turn ends without them, and /catchup for a session you switch back to."
+    },
+    {
+      "name": "context-steward",
+      "source": "./mods/context-steward",
+      "description": "Shows the context window's fill under the prompt, reminds Claude once when it grows past a threshold, and offers Compact or a handoff file + /clear from a band above the prompt."
     }
   ]
 }

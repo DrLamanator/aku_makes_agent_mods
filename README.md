@@ -12,6 +12,7 @@ At the prompt of a Claude Code terminal session:
 /plugin install prompt-enhancer --marketplace drlamanator/aku_makes_agent_mods
 /plugin install assumption-check --marketplace drlamanator/aku_makes_agent_mods
 /plugin install plain-answers --marketplace drlamanator/aku_makes_agent_mods
+/plugin install context-steward --marketplace drlamanator/aku_makes_agent_mods
 ```
 
 From a shell:
@@ -20,6 +21,7 @@ From a shell:
 claude plugin install prompt-enhancer --marketplace drlamanator/aku_makes_agent_mods
 claude plugin install assumption-check --marketplace drlamanator/aku_makes_agent_mods
 claude plugin install plain-answers --marketplace drlamanator/aku_makes_agent_mods
+claude plugin install context-steward --marketplace drlamanator/aku_makes_agent_mods
 ```
 
 Answer `y` to add the marketplace, then pick a scope (user scope = every session).
@@ -77,6 +79,24 @@ Notes:
 - The guide adds about 300 tokens to each prompt you send.
 - A recap is one extra call on the session's model. Most of the conversation is served from the prompt cache, but you still pay for the output, and the turn ends a few seconds later. It only runs when Claude skipped the sections.
 - It is an instruction, not a filter: Claude usually follows it, and the recap covers the times it doesn't.
+- Needs Claude Code 2.1.299 or newer: a skill or prompt command (`/simplify`, `/code-review`) goes without the guide, since its own instructions shape that reply.
+
+### context-steward
+
+Keeps an eye on how full the context window is, and helps you start fresh before it gets expensive.
+
+1. A status line under the prompt shows the fill: `ctx 142k / 1M · 14 %`.
+2. Past the threshold (default 160k tokens), Claude gets one short note with your next prompt: suggest `/compact` or a handoff when the current step is done. It comes again only after the context grows by another step (default 40k).
+3. Past the threshold, a band above the prompt offers **Compact**, **Handoff + clear** and **Hide**.
+4. **Handoff + clear** (or `/steward-handoff`) forks the session to write a handoff file (goal, evidence, decisions, changed files, verified / not verified, open items, next step) to `~/.claude/context-steward/handoffs/<session>/`. A pane shows it; **Clear ja jatka** runs `/clear` and feeds the handoff into the next conversation once, **Peru** leaves everything as it was.
+5. If the fork cannot write one, the `context-steward:aku-handoff` skill is the fallback: Claude writes the file and you run `/clear` yourself.
+
+Notes:
+
+- Set the threshold and step in the plugin's options (`thresholdTokens`, `stepTokens`).
+- **Compact** passes keep instructions so the summary holds the same fields as a handoff; Claude Code's own compactions get them too.
+- A handoff is one extra call on the session's model, mostly served from the prompt cache.
+- The pane's buttons are in Finnish (Clear ja jatka / Peru / Sulje).
 
 ## Develop
 
