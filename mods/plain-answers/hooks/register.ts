@@ -102,6 +102,8 @@ export const register: Register = on => {
     return next(e)
   })
 
+  // A skill or prompt command comes through here with `command` set (2.1.299+);
+  // its own instructions shape that reply, so the guide stays out of it.
   on('prompt.submit', ($, e, next) => {
     if (e.command !== undefined) return next(e)
     return next({ ...e, context: [...(e.context ?? []), GUIDE] })

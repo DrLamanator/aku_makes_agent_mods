@@ -43,12 +43,18 @@ async function turn($: Engine, rows: SessionMessage[], made: SessionMessage[], a
   return $.turn.complete({ answer, durationMs: 1, isAborted: false, turnId: 'turn-1', reason: 'answer', ...(agentId ? { agentId } : {}) })
 }
 
-test('the guide rides beside a typed prompt, not a slash command', async ($, on) => {
+test('the guide rides beside a prompt, after any context already there', async ($, on) => {
   const engine = fakeEngine(on)
   await $.prompt.submit({ text: 'fix login', wait: false, origin: { kind: 'composer' } })
-  await $.prompt.submit({ text: '/compact', wait: false, origin: { kind: 'composer' }, command: { name: 'compact', args: '' } })
+  await $.prompt.submit({ text: 'and the tests', wait: false, origin: { kind: 'composer' }, context: ['from below'] })
   expect(engine.contexts[0]).toEqual([GUIDE])
-  expect(engine.contexts[1]).toBeUndefined()
+  expect(engine.contexts[1]).toEqual(['from below', GUIDE])
+})
+
+test('a skill or prompt command goes without the guide', async ($, on) => {
+  const engine = fakeEngine(on)
+  await $.prompt.submit({ text: '/simplify', wait: false, origin: { kind: 'composer' }, command: { name: 'simplify', args: '' } })
+  expect(engine.contexts[0]).toBeUndefined()
 })
 
 test('a work turn that ends without the sections gets a recap beneath it', async ($, on) => {
